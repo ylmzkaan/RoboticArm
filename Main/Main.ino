@@ -112,11 +112,11 @@ void loop() {
 	currentProtection();
   
 	// Update the target angular positions for motor shafts
- /*
-  Target angular positions at a specific time. During a ramp signal, target angular position of a particular motor's
-  shaft depends on time. Thus, target angular position varies on time. currentTargetAngularPosition is an array that
-  holds the current target angular position at any time.
-  */
+	/*
+	Target angular positions at a specific time. During a ramp signal, target angular position of a particular motor's
+	shaft depends on time. Thus, target angular position varies on time. currentTargetAngularPosition is an array that
+	holds the current target angular position at any time.
+	*/
 	double* currentTargetAngularPositions = calcCurrentTargetAngularPositions(finalAngularPositions);
  
 	driveMotorsToCurrentTargets(currentTargetAngularPositions);
