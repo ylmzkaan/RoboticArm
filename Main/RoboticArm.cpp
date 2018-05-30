@@ -1,6 +1,7 @@
 #include "Encoder.h"
 #include "PID_v1.h" 
 #include "DualVNH5019MotorShield.h"
+#include "RoboticArm.h"
 
 extern double ref1, input1, output1, p, i, d;
 extern double ref2, input2, output2, p2, i2, d2;
