@@ -34,8 +34,7 @@ void motorControl(int motor, double targetAngularPosition)
 		// Actual position of encoder1 in degrees. 
 		// 2248.86 is 48*47 (encoder's total pulses in one revolution)*(reduction ratio)
 		input1 = M1enc.read() / 2248.86 * 360;
-		// Target position in degrees
-		ref1 = targetAngularPosition;
+		ref1 = targetAngularPosition; // In degrees
 		// Set PID gains to p = 40, i = 20, d = 0
 		PID1.SetTunings(40, 20, 0);
 		// Compute PID output using input1, ref1 and pid gains
@@ -79,51 +78,49 @@ void motorControl(int motor, double targetAngularPosition)
 void emerStop()
 {
 	if (digitalRead(53) == LOW) {
-		// Set all motors' speeds to 0
 		motorDriver.setSpeeds(0, 0, 0, 0);
 		Serial.println("Emergency stop");
-		// Go into infinite loop for safety purposes
-		while (1);
+		while (true); // This is not elegant!
 	}
 }
 
-// If any of the motors draw more than 5500 mA, voltages supplied to all motors are set to 0 and code enters to infinite loop
 void currentProtection()
 {
 	// Maximum drawable current
 	const short currentLimit = 5500;
 
-	if (motorDriver.getM1CurrentMilliamps() > currentLimit || motorDriver.getM2CurrentMilliamps() > currentLimit ||
-		motorDriver.getM3CurrentMilliamps() > currentLimit || motorDriver.getM4CurrentMilliamps() > currentLimit)
+	if (motorDriver.getM1CurrentMilliamps() > currentLimit 
+	    || motorDriver.getM2CurrentMilliamps() > currentLimit 
+	    || motorDriver.getM3CurrentMilliamps() > currentLimit 
+	    || motorDriver.getM4CurrentMilliamps() > currentLimit)
 	{
 		Serial.print("STOPPED DUE TO HIGH CURRENT");
 		motorDriver.setSpeeds(0, 0, 0, 0);
-		while (1);
+		while (true);
 	}
 }
 
-// If there is a fault with motors, below function prevents them from working
 void stopIfFault()
 {
 	if (motorDriver.getM1Fault())
 	{
 		Serial.println("M1 fault");
-		while (1);
+		while (true);
 	}
-	if (motorDriver.getM2Fault())
+	else if (motorDriver.getM2Fault())
 	{
 		Serial.println("M2 fault");
-		while (1);
+		while (true);
 	}
-	if (motorDriver.getM3Fault())
+	else if (motorDriver.getM3Fault())
 	{
 		Serial.println("M3 fault");
-		while (1);
+		while (true);
 	}
-	if (motorDriver.getM4Fault())
+	else if (motorDriver.getM4Fault())
 	{
 		Serial.println("M4 fault");
-		while (1);
+		while (true);
 	}
 }
 
@@ -131,11 +128,10 @@ double* calcCurrentTargetAngularPositions(double* finalAngularPositions)
 {
 	if (millis() < rampDuration)
 	{
-		// Time passed since the beginning of the code (seconds)
+		// Time passed since the beginning of the code
 		double currentTime = millis();
 
-		// Get at which position should the motor shafts be at the present time
-		
+		// Calculate at which position should the motor shafts be at the present time
 		currentTargetAngularPositions[0] = currentTime * finalAngularPositions[0] / rampDuration; // Degrees
 		currentTargetAngularPositions[1] = currentTime * finalAngularPositions[1] / rampDuration;
 		currentTargetAngularPositions[2] = currentTime * finalAngularPositions[2] / rampDuration;
@@ -149,9 +145,6 @@ double* calcCurrentTargetAngularPositions(double* finalAngularPositions)
 	}
 }
 
-/*
-Drive all 4 motors to the current target angular positions
-*/
 void driveMotorsToCurrentTargets(double* angularPositions)
 {
 	motorControl(1, angularPositions[0]);
