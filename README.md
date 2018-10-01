@@ -1,4 +1,4 @@
-As a graduation project, we have designed and manufactured a 4-DOF robotic arm. 
+As a graduation project, as a team of 3 people, we have designed and manufactured a 4-DOF robotic arm. 
 We used 4 Pololu DC motors with built-in incremental encoders. 
 All DC motors are driven by two Pololu Dual VNH5019 Dc Motor drivers. 
 We used Arduino Mega as the microcontroller. 
