@@ -6,3 +6,5 @@ This repository contains the main code that gives a user-defined ramp signal to 
 For further information about the project please refer to the below link:
 
 https://www.researchgate.net/publication/322272849_Design_and_Manufacturing_of_a_4_Degree_of_Freedom_Robotic_Arm
+
+Note: Source codes published in above link are deprecated. Most up to date source codes can be found in this repository.
